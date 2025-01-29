@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>
+            <% "ToDo List" %>
+        </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/home.css">
+    </head>
+    <body>
+        
+          
+        <div class="container">
+            <div class="todo">
+                <h2> To Do List <img src="icon-to-do.jpeg" alt="ToDo Icon" width="30" height="30"></h2>
+                <form action="/create-todo" method="post" id="row">
+                    <div id="input-box">
+                        <input type="text" name="todo" id="input-box" placeholder="Enter the task" required>
+                        <button type="submit" id="add-taskbutton"> Add </button>
+                    </div>
+                    <aside>
+                        <fieldset>
+                            <legend class="legend">Due Date</legend>
+                            <input type="date" name="date" id="date" required />
+                        </fieldset>
+                    
+                        <fieldset>
+                            <legend class="legend">Category</legend>
+                            <select name="category" id="category" required>
+                                <option selected class="def" value="">Select Category</option>
+                                <option value="personal">Personal</option>
+                                <option value="work">Work</option>
+                                <option value="study">Study</option>
+                                <option value="chores">Chores</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </fieldset>
+                    </aside>
+                    
+                </form>
+                <ul id="list-container">
+                    <% for(let i of ToDo_List) { %>
+                      <li>
+                        <div>
+                            <!-- Checkbox to mark as completed -->
+                           <input type="checkbox" 
+                           class="checked" 
+                           <%= i.completed ? 'checked' : '' %> 
+                           onchange="window.location.href='/check-todo/?id=<%= i._id %>&completed=<%= !i.completed %>'">
+                          
+                        </div>
+                        <div id="list">
+                            <p><%= i.todo %></p>
+                        </div>
+                        <div id="list">
+                            <p>Due Date: <%= i.date %></p>
+                        </div>
+                        <div id="list" <%= i.category %>">
+                            <p><%= i.category %></p>
+                        </div>
+                        <div class="delete-button">
+                            <a href="/delete-todo/?id=<%= i._id%>&todo=<%= i.todo%>">
+                                <i class="fa fa-window-close"></i>
+                            </a>
+                          </div>
+                        </li>
+
+                    <% } %>
+                  </ul> 
+                </div> 
+        </div>
+        <script type="text/javascript" src="/css/js/home.js"></script>
+    </body>
+</html>
